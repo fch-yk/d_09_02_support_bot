@@ -34,6 +34,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     return {
         'session_path': session_path,
         'conversation_items': conversation_items,
+        'is_fallback': query_result.intent.is_fallback,
     }
 
 
