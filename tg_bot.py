@@ -54,7 +54,7 @@ def main() -> None:
     env = Env()
     env.read_env()
     support_bot_token = env('SUPPORT_BOT_TOKEN')
-    dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
+    google_cloud_project = env.str('GOOGLE_CLOUD_PROJECT')
 
     logging.basicConfig()
     logs_handler = TelegramLogsHandler(
@@ -77,7 +77,7 @@ def main() -> None:
 
     reply_handler = functools.partial(
         reply,
-        project_id=dialogflow_project_id,
+        project_id=google_cloud_project,
     )
     dispatcher.add_handler(MessageHandler(
         Filters.text & ~Filters.command, reply_handler))

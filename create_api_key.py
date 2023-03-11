@@ -45,8 +45,8 @@ def create_api_key(project_id: str) -> Key:
 def main() -> None:
     env = Env()
     env.read_env()
-    dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
-    key = create_api_key(dialogflow_project_id)
+    google_cloud_project = env.str('GOOGLE_CLOUD_PROJECT')
+    key = create_api_key(google_cloud_project)
     print(key)
 
 

@@ -36,7 +36,7 @@ def main() -> None:
     env = Env()
     env.read_env()
     vk_group_token = env.str('VK_GROUP_TOKEN')
-    dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
+    google_cloud_project = env.str('GOOGLE_CLOUD_PROJECT')
     logging.basicConfig()
     logs_handler = TelegramLogsHandler(
         logs_bot_token=env('LOGS_BOT_TOKEN'),
@@ -53,7 +53,7 @@ def main() -> None:
     longpoll = VkLongPoll(vk_session)
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            reply(event.user_id, vk_api, event.text, dialogflow_project_id)
+            reply(event.user_id, vk_api, event.text, google_cloud_project)
 
 
 if __name__ == '__main__':

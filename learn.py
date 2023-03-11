@@ -56,14 +56,14 @@ def main():
     logger.setLevel(
         logging.DEBUG if env.bool("DEBUG_MODE", False) else logging.INFO
     )
-    dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
+    google_cloud_project = env.str('GOOGLE_CLOUD_PROJECT')
     questions_file_path = env.str('QUESTIONS_FILE_PATH')
     with open(questions_file_path, 'r', encoding='UTF-8') as file:
         intents_templates = json.load(file)
 
     for intent_display_name, intent_card in intents_templates.items():
         intent = create_intent(
-            project_id=dialogflow_project_id,
+            project_id=google_cloud_project,
             display_name=intent_display_name,
             training_phrases_parts=intent_card['questions'],
             message_texts=[intent_card['answer'], ],
