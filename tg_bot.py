@@ -9,6 +9,7 @@ from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, Updater)
 
 from detect_intent import detect_intent_texts
+from tg_monitor import TelegramLogsHandler
 
 logger = logging.getLogger(__file__)
 
@@ -31,19 +32,21 @@ def reply(
     context: CallbackContext,
     project_id: str,
 ) -> None:
+    message_text = ''
     try:
         message = update.message
+        message_text = message.text
         intent_texts = detect_intent_texts(
             project_id=project_id,
             session_id=message.chat_id,
-            texts=[message.text],
+            texts=[message_text],
             language_code="ru-Ru",
         )
         message.reply_text(
             intent_texts['conversation_items'][0]['fulfillment_text']
         )
     except Exception as error:
-        logger.debug('Reply failed: %s', error)
+        logger.error('Reply to "%s" failed: %s ', message_text, error)
 
 
 def main() -> None:
@@ -53,6 +56,13 @@ def main() -> None:
     dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
 
     logging.basicConfig()
+    logs_handler = TelegramLogsHandler(
+        logs_bot_token=env('LOGS_BOT_TOKEN'),
+        chat_id=env('SERVICE_ADMIN_TG_ID'),
+    )
+
+    logger.addHandler(logs_handler)
+    logger.addHandler(logging.StreamHandler())
     logger.setLevel(
         logging.DEBUG if env.bool("DEBUG_MODE", False) else logging.INFO
     )
