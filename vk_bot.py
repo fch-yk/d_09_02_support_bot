@@ -4,7 +4,9 @@ import random
 import vk_api as vk
 from environs import Env
 from vk_api.longpoll import VkEventType, VkLongPoll
+
 from detect_intent import detect_intent_texts
+from language_tools import get_language_code
 from tg_monitor import TelegramLogsHandler
 
 logger = logging.getLogger(__file__)
@@ -16,7 +18,7 @@ def reply(user_id, vk_api, input_text, project_id):
             project_id=project_id,
             session_id=user_id,
             texts=[input_text],
-            language_code="ru-Ru",
+            language_code=get_language_code(input_text),
         )
         if intent_texts['is_fallback']:
             logger.debug('fallback <-- %s', input_text)

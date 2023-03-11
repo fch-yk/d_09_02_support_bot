@@ -1,4 +1,3 @@
-from environs import Env
 from google.cloud import dialogflow
 
 
@@ -36,35 +35,3 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
         'conversation_items': conversation_items,
         'is_fallback': query_result.intent.is_fallback,
     }
-
-
-def main() -> None:
-    env = Env()
-    env.read_env()
-    user_id = env.str('TELEGRAM_USER_ID')
-    dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
-    texts = [
-        'Кто здесь?',
-        'Хеллоу',
-        'приветствую',
-        'и что?'
-    ]
-
-    conversation_report = detect_intent_texts(
-        project_id=dialogflow_project_id,
-        session_id=user_id,
-        texts=texts,
-        language_code='ru-Ru'
-    )
-
-    print('session path: ', conversation_report['session_path'])
-    for item in conversation_report['conversation_items']:
-        print("=" * 20)
-        print('query text:', item['query_text'])
-        print('detected_intent:', item['detected_intent'])
-        print('confidence:', item['confidence'])
-        print('fulfillment text:', item['fulfillment_text'])
-
-
-if __name__ == '__main__':
-    main()

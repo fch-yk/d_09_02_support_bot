@@ -1,0 +1,63 @@
+{
+    "Greeting": {
+        "language_code": "en",
+        "questions": [
+            "Hello",
+            "Hi",
+            "Howdy",
+            "Anybody here?",
+            "Good day"
+        ],
+        "answer": "Hello! I am a support bot. Can I help you?"
+    },
+    "Job search": {
+        "language_code": "en",
+        "questions": [
+            "How to get a job with you?",
+            "How to work for you?",
+            "I want to work for you"
+        ],
+        "answer": "If you want to join us, please email game-of-verbs@gmail.com with a mini-essay about yourself and attach your portfolio."
+    },
+    "Password": {
+        "language_code": "en",
+        "questions": [
+            "I do not remember the password",
+            "I can not enter",
+            "I forgot my password",
+            "Забыл логин",
+            "Restore password",
+            "Can't sign in"
+        ],
+        "answer": "If you can't log in to the site, use the 'Forgot your password' button. You will receive an email with further instructions. Check your spam folder, sometimes emails end up there."
+    },
+    "Account removal": {
+        "language_code": "en",
+        "questions": [
+            "I want to delete my account",
+            "Remove the account",
+            "How to remove my account"
+        ],
+        "answer": "If you want to delete your account, you can do so in your profile 'Settings' section. Scroll through this section to the area highlighted in red."
+    },
+    "Ban": {
+        "language_code": "en",
+        "questions": [
+            "I got banned",
+            "Unban",
+            "Unban me",
+            "Is it possible to buy unban?",
+            "I want to buy unban"
+        ],
+        "answer": "If you are banned, you have violated our community rules. When you enter the site, you can see evidence of your violations and a link to the violated rule. The unban is not for sale. If you have read the rules and evidence of your guilt and you still have complaints, use the 'Not Guilty' form under the ban message."
+    },
+    "Partner": {
+        "language_code": "en",
+        "questions": [
+            "Where is the meeting taking place?",
+            "When will you transfer money under the contract?",
+            "I will transfet money soon"
+        ],
+        "answer": "Sorry, the SMM department is in this chat, we do not know the answer to this question. Contact directly the person you are working with."
+    }
+}

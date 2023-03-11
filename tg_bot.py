@@ -10,6 +10,7 @@ from telegram.ext import (CallbackContext, CommandHandler, Filters,
 
 from detect_intent import detect_intent_texts
 from tg_monitor import TelegramLogsHandler
+from language_tools import get_language_code
 
 logger = logging.getLogger(__file__)
 
@@ -40,7 +41,7 @@ def reply(
             project_id=project_id,
             session_id=message.chat_id,
             texts=[message_text],
-            language_code="ru-Ru",
+            language_code=get_language_code(message_text),
         )
         message.reply_text(
             intent_texts['conversation_items'][0]['fulfillment_text']

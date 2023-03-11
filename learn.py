@@ -13,7 +13,8 @@ def create_intent(
         project_id: str,
         display_name: str,
         training_phrases_parts: List,
-        message_texts: List
+        message_texts: List,
+        language_code: str
 ) -> Intent:
     """
     Create an intent of the given intent type.
@@ -42,7 +43,9 @@ def create_intent(
     )
 
     return intents_client.create_intent(
-        request={"parent": parent, "intent": intent}
+        parent=parent,
+        intent=intent,
+        language_code=language_code
     )
 
 
@@ -54,7 +57,7 @@ def main():
         logging.DEBUG if env.bool("DEBUG_MODE", False) else logging.INFO
     )
     dialogflow_project_id = env.str('DIALOGFLOW_PROJECT_ID')
-    questions_file_path = env.str('QUESTIONS_FILE_PATH', 'questions.json')
+    questions_file_path = env.str('QUESTIONS_FILE_PATH')
     with open(questions_file_path, 'r', encoding='UTF-8') as file:
         intents_templates = json.load(file)
 
@@ -64,6 +67,7 @@ def main():
             display_name=intent_display_name,
             training_phrases_parts=intent_card['questions'],
             message_texts=[intent_card['answer'], ],
+            language_code=intent_card['language_code']
         )
         logger.debug('Intent created: %s', intent)
 
