@@ -1,6 +1,6 @@
-import langid
+import py3langid
 
 
 def get_language_code(text):
-    langid.set_languages(['en', 'ru'])
-    return langid.classify(text)[0]
+    py3langid.set_languages(['en', 'ru'])
+    return py3langid.classify(text)[0]
