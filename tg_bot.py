@@ -20,14 +20,6 @@ def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Здравствуйте! Чем можем помочь?')
 
 
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    update.message.reply_text(
-        'Задайте вопрос боту поддержки издательства'
-        '"Игра глаголов"'
-    )
-
-
 def reply(
     update: Update,
     context: CallbackContext,
@@ -73,8 +65,6 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-
     reply_handler = functools.partial(
         reply,
         project_id=google_cloud_project,
