@@ -1,5 +1,6 @@
 import logging
 import random
+from contextlib import suppress
 
 import vk_api as vk
 from environs import Env
@@ -13,23 +14,20 @@ logger = logging.getLogger(__file__)
 
 
 def reply(user_id, vk_api, input_text, project_id):
-    try:
-        intent_texts = detect_intent_texts(
-            project_id=project_id,
-            session_id=user_id,
-            texts=[input_text],
-            language_code=get_language_code(input_text),
-        )
-        if intent_texts['is_fallback']:
-            logger.debug('fallback <-- %s', input_text)
-            return
-        vk_api.messages.send(
-            user_id=user_id,
-            message=intent_texts['conversation_items'][0]['fulfillment_text'],
-            random_id=random.randint(1, 1000)
-        )
-    except Exception as error:
-        logger.error('Reply to "%s" failed: %s ', input_text, error)
+    intent_texts = detect_intent_texts(
+        project_id=project_id,
+        session_id=user_id,
+        texts=[input_text],
+        language_code=get_language_code(input_text),
+    )
+    if intent_texts['is_fallback']:
+        logger.debug('fallback <-- %s', input_text)
+        return
+    vk_api.messages.send(
+        user_id=user_id,
+        message=intent_texts['conversation_items'][0]['fulfillment_text'],
+        random_id=random.randint(1, 1000)
+    )
 
 
 def main() -> None:
@@ -53,8 +51,12 @@ def main() -> None:
     longpoll = VkLongPoll(vk_session)
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            reply(event.user_id, vk_api, event.text, google_cloud_project)
+            try:
+                reply(event.user_id, vk_api, event.text, google_cloud_project)
+            except Exception as error:
+                logger.error('Reply to "%s" failed: %s ', event.text, error)
 
 
 if __name__ == '__main__':
-    main()
+    with suppress(KeyboardInterrupt):
+        main()
