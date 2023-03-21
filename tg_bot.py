@@ -71,21 +71,17 @@ def reply(
     context: CallbackContext,
     project_id: str,
 ) -> None:
-    message_text = ''
-    try:
-        message = update.message
-        message_text = message.text
-        intent_texts = detect_intent_texts(
-            project_id=project_id,
-            session_id=message.chat_id,
-            texts=[message_text],
-            language_code=get_language_code(message_text),
-        )
-        message.reply_text(
-            intent_texts['conversation_items'][0]['fulfillment_text']
-        )
-    except Exception as error:
-        logger.error('Reply to "%s" failed: %s ', message_text, error)
+    message = update.message
+    message_text = message.text
+    intent_texts = detect_intent_texts(
+        project_id=project_id,
+        session_id=message.chat_id,
+        texts=[message_text],
+        language_code=get_language_code(message_text),
+    )
+    message.reply_text(
+        intent_texts['conversation_items'][0]['fulfillment_text']
+    )
 
 
 def main() -> None:
